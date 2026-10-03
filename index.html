@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow">
+  <title>For Minnu 🌻</title>
+
+  <!-- Open Graph for WhatsApp / social previews -->
+  <meta property="og:title" content="Someone made something for you 🌻">
+  <meta property="og:description" content="Tap to open your birthday surprise...">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="">
+
+  <!-- Sunflower favicon -->
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌻</text></svg>">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,800;1,400;1,700&family=Nunito:wght@400;600;700;800&family=Caveat:wght@400;700&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <!-- Background Music -->
+  <audio id="bg-music" loop preload="auto">
+    <source src="audio/music.mpeg" type="audio/mpeg">
+    <source src="audio/music.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Background particle canvas -->
+  <canvas id="particle-canvas" aria-hidden="true"></canvas>
+
+  <!-- Confetti overlay canvas -->
+  <canvas id="confetti-canvas" aria-hidden="true"></canvas>
+
+  <!-- Desktop floating decorations -->
+  <div class="desktop-decor" id="desktop-decor" aria-hidden="true"></div>
+
+  <!-- ====== APP ====== -->
+  <div class="app" id="app">
+
+    <!-- Top bar -->
+    <header class="top-bar" id="top-bar">
+      <div class="top-pill">
+        <span class="top-pill__icon">🌻</span>
+        <span>For Minnu</span>
+      </div>
+      <button class="mute-btn" id="mute-btn" aria-label="Toggle music" title="Toggle music">
+        <svg class="mute-btn__icon mute-btn__icon--on" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+          <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
+          <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+        </svg>
+        <svg class="mute-btn__icon mute-btn__icon--off" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+          <line x1="23" y1="9" x2="17" y2="15" />
+          <line x1="17" y1="9" x2="23" y2="15" />
+        </svg>
+      </button>
+    </header>
+
+    <!-- Progress dots -->
+    <nav class="progress" id="progress" aria-label="Screen progress">
+      <span class="progress__dot active" data-dot="0"></span>
+      <span class="progress__dot" data-dot="1"></span>
+      <span class="progress__dot" data-dot="2"></span>
+      <span class="progress__dot" data-dot="3"></span>
+      <span class="progress__dot" data-dot="4"></span>
+      <span class="progress__dot" data-dot="5"></span>
+      <span class="progress__dot" data-dot="6"></span>
+      <span class="progress__dot" data-dot="7"></span>
+    </nav>
+
+    <!-- ====== STAGE (card frame on desktop) ====== -->
+    <main class="stage" id="stage">
+
+      <!-- ====== SCREEN 1: OPENING ====== -->
+      <section class="screen screen--opening active" id="screen-0" aria-label="Opening">
+        <div class="screen__inner">
+          <div class="opening__content">
+            <h1 class="opening__title" id="opening-title">It's your birthday!</h1>
+            <p class="opening__yay" id="opening-yay">Yay!!! 🎉</p>
+          </div>
+          <p class="tap-hint" id="opening-hint">
+            <span class="tap-hint__icon">👆</span>
+            <span>tap to begin</span>
+          </p>
+        </div>
+      </section>
+
+      <!-- ====== SCREEN 2: GREETING ====== -->
+      <section class="screen screen--greeting" id="screen-1" aria-label="Birthday greeting">
+        <div class="screen__inner">
+          <p class="greeting__sub" id="greeting-sub">it's officially your day</p>
+          <h1 class="greeting__title" id="greeting-title">
+            <span class="greeting__word" style="--i:0">Happy</span>
+            <span class="greeting__word" style="--i:1">Birthday,</span>
+            <br>
+            <span class="greeting__word greeting__word--name" style="--i:2">Minnu</span>
+          </h1>
+          <p class="greeting__age" id="greeting-age">and somehow, you are <strong>21</strong> already</p>
+
+          <!-- Sunflower bouquet illustration -->
+          <div class="greeting__rose greeting__sunflower" aria-hidden="true">
+            <svg viewBox="0 0 140 160" class="rose-bouquet sunflower-bouquet">
+              <defs>
+                <radialGradient id="sun-center" cx="40%" cy="40%">
+                  <stop offset="0%" stop-color="#78350f" />
+                  <stop offset="70%" stop-color="#451a03" />
+                  <stop offset="100%" stop-color="#290e02" />
+                </radialGradient>
+                <linearGradient id="kraft-wrap" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#e2b87c" />
+                  <stop offset="100%" stop-color="#c49755" />
+                </linearGradient>
+              </defs>
+              <!-- Stems -->
+              <line x1="70" y1="80" x2="55" y2="155" stroke="#4d7c0f" stroke-width="3.5" stroke-linecap="round" />
+              <line x1="70" y1="80" x2="70" y2="155" stroke="#65a30d" stroke-width="3.5" stroke-linecap="round" />
+              <line x1="70" y1="80" x2="85" y2="155" stroke="#4d7c0f" stroke-width="3.5" stroke-linecap="round" />
+              <!-- Leaves -->
+              <ellipse cx="46" cy="115" rx="14" ry="7" fill="#65a30d" transform="rotate(-35 46 115)" />
+              <ellipse cx="94" cy="110" rx="14" ry="7" fill="#84cc16" transform="rotate(25 94 110)" />
+              <ellipse cx="58" cy="95" rx="12" ry="6" fill="#65a30d" transform="rotate(-15 58 95)" />
+
+              <!-- Left Sunflower -->
+              <g transform="translate(42, 58)">
+                <!-- Petals -->
+                <circle cx="0" cy="0" r="24" fill="#fbbf24" stroke="#f59e0b" stroke-width="1.5" />
+                <path
+                  d="M0,-24 L3,-12 L12,-20 L9,-9 L20,-12 L12,-3 L24,0 L12,3 L20,12 L9,9 L12,20 L3,12 L0,24 L-3,12 L-12,20 L-9,9 L-20,12 L-12,3 L-24,0 L-12,-3 L-20,-12 L-9,-9 L-12,-20 L-3,-12 Z"
+                  fill="#f59e0b" />
+                <circle cx="0" cy="0" r="11" fill="url(#sun-center)" />
+                <circle cx="0" cy="0" r="8" fill="#5c2c08" opacity="0.6" stroke="#fbbf24" stroke-width="0.8"
+                  stroke-dasharray="2,2" />
+              </g>
+
+              <!-- Right Sunflower -->
+              <g transform="translate(98, 55)">
+                <circle cx="0" cy="0" r="23" fill="#fbbf24" stroke="#f59e0b" stroke-width="1.5" />
+                <path
+                  d="M0,-23 L3,-11 L11,-19 L8,-8 L19,-11 L11,-3 L23,0 L11,3 L19,11 L8,8 L11,19 L3,11 L0,23 L-3,11 L-11,19 L-8,8 L-19,11 L-11,3 L-23,0 L-11,-3 L-19,-11 L-8,-8 L-11,-19 L-3,-11 Z"
+                  fill="#f59e0b" />
+                <circle cx="0" cy="0" r="10.5" fill="url(#sun-center)" />
+                <circle cx="0" cy="0" r="7.5" fill="#5c2c08" opacity="0.6" stroke="#fbbf24" stroke-width="0.8"
+                  stroke-dasharray="2,2" />
+              </g>
+
+              <!-- Main Center Sunflower (front & prominent) -->
+              <g transform="translate(70, 38)">
+                <circle cx="0" cy="0" r="28" fill="#fbbf24" stroke="#f59e0b" stroke-width="1.5" />
+                <path
+                  d="M0,-28 L4,-14 L14,-24 L10,-10 L24,-14 L14,-4 L28,0 L14,4 L24,14 L10,10 L14,24 L4,14 L0,28 L-4,14 L-14,24 L-10,10 L-24,14 L-14,4 L-28,0 L-14,-4 L-24,-14 L-10,-10 L-14,-24 L-4,-14 Z"
+                  fill="#f59e0b" />
+                <circle cx="0" cy="0" r="13" fill="url(#sun-center)" />
+                <circle cx="0" cy="0" r="10" fill="#5c2c08" opacity="0.7" stroke="#fef08a" stroke-width="1"
+                  stroke-dasharray="2,2" />
+                <circle cx="-3" cy="-3" r="2" fill="#fef08a" opacity="0.4" />
+              </g>
+
+              <!-- Kraft wrap -->
+              <path d="M35 125 Q70 110 105 125 L100 156 Q70 146 40 156 Z" fill="url(#kraft-wrap)" opacity="0.9" />
+              <!-- Golden Ribbon -->
+              <path d="M52 144 Q70 136 88 144" stroke="#d97706" stroke-width="2.5" fill="none" stroke-linecap="round" />
+              <circle cx="70" cy="140" r="3" fill="#d97706" />
+            </svg>
+          </div>
+          <p class="tap-hint">tap anywhere to continue</p>
+        </div>
+      </section>
+
+      <!-- ====== SCREEN 3: CAKE ====== -->
+      <section class="screen screen--cake" id="screen-2" aria-label="Birthday cake">
+        <div class="screen__inner">
+          <h2 class="cake__title">Cake first. Obviously. 🎂</h2>
+
+          <div class="cake__wrapper" id="cake-wrapper">
+            <!-- Upma Cake SVG -->
+            <svg viewBox="0 0 320 360" class="upma-cake" id="upma-cake" role="img"
+              aria-label="A whimsical upma flavoured birthday cake">
+              <defs>
+                <!-- Upma grain pattern -->
+                <pattern id="upma-grain" width="12" height="12" patternUnits="userSpaceOnUse">
+                  <rect width="12" height="12" fill="#e8c840" />
+                  <circle cx="2" cy="3" r="0.9" fill="#d4b530" opacity="0.7" />
+                  <circle cx="6" cy="1" r="1.1" fill="#f2dc60" opacity="0.5" />
+                  <circle cx="10" cy="4" r="0.7" fill="#cca828" opacity="0.6" />
+                  <circle cx="1" cy="8" r="1.0" fill="#dcc040" opacity="0.6" />
+                  <circle cx="4" cy="6" r="0.8" fill="#e0c438" opacity="0.5" />
+                  <circle cx="8" cy="9" r="1.2" fill="#f0d850" opacity="0.4" />
+                  <circle cx="11" cy="2" r="0.6" fill="#c8a020" opacity="0.5" />
+                  <circle cx="3" cy="10" r="0.9" fill="#e8d040" opacity="0.6" />
+                  <circle cx="7" cy="5" r="0.7" fill="#d8b830" opacity="0.5" />
+                  <circle cx="5" cy="11" r="0.5" fill="#ecd448" opacity="0.4" />
+                  <circle cx="9" cy="7" r="0.8" fill="#dac035" opacity="0.5" />
+                </pattern>
+
+                <!-- Ghee sheen gradient -->
+                <linearGradient id="ghee-shine" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#fff8c4" stop-opacity="0" />
+                  <stop offset="40%" stop-color="#fff8c4" stop-opacity="0.35" />
+                  <stop offset="60%" stop-color="#fff8c4" stop-opacity="0.35" />
+                  <stop offset="100%" stop-color="#fff8c4" stop-opacity="0" />
+                </linearGradient>
+
+                <!-- Candle flame gradient -->
+                <radialGradient id="flame-grad" cx="50%" cy="70%">
+                  <stop offset="0%" stop-color="#fff4c4" />
+                  <stop offset="40%" stop-color="#ffa726" />
+                  <stop offset="100%" stop-color="#ff5722" stop-opacity="0.6" />
+                </radialGradient>
+
+                <!-- Flame glow -->
+                <filter id="flame-glow">
+                  <feGaussianBlur stdDeviation="3" result="blur" />
+                  <feMerge>
+                    <feMergeNode in="blur" />
+                    <feMergeNode in="SourceGraphic" />
+                  </feMerge>
+                </filter>
+
+                <!-- Smoke filter -->
+                <filter id="smoke-blur">
+                  <feGaussianBlur stdDeviation="4" />
+                </filter>
+              </defs>
+
+              <!-- Pink plate / stand -->
+              <ellipse cx="160" cy="330" rx="140" ry="18" fill="#f8bbd0" />
+              <ellipse cx="160" cy="326" rx="130" ry="14" fill="#f48fb1" />
+              <ellipse cx="160" cy="322" rx="125" ry="12" fill="#f06292" />
+
+              <!-- ===== TIER 1 (Bottom) ===== -->
+              <rect x="50" y="250" width="220" height="72" rx="8" fill="url(#upma-grain)" />
+              <!-- Mounded top -->
+              <ellipse cx="160" cy="253" rx="112" ry="8" fill="url(#upma-grain)" />
+              <!-- Ghee shine -->
+              <rect x="70" y="258" width="100" height="50" rx="4" fill="url(#ghee-shine)" />
+              <!-- Sunflower golden ribbon -->
+              <rect x="48" y="310" width="224" height="12" rx="4" fill="#f59e0b" opacity="0.85" />
+              <rect x="48" y="310" width="224" height="6" rx="3" fill="#fef08a" opacity="0.6" />
+
+              <!-- Tier 1 garnishes -->
+              <!-- Mustard seeds -->
+              <circle cx="80" cy="275" r="1.5" fill="#1a1a1a" />
+              <circle cx="120" cy="280" r="1.3" fill="#2a2a1a" />
+              <circle cx="200" cy="270" r="1.5" fill="#1a1a1a" />
+              <circle cx="230" cy="285" r="1.2" fill="#2a2a1a" />
+              <circle cx="155" cy="295" r="1.4" fill="#1a1a1a" />
+              <circle cx="100" cy="300" r="1.3" fill="#2a2a1a" />
+
+              <!-- Curry leaves -->
+              <ellipse cx="95" cy="268" rx="7" ry="3" fill="#2e7d32" transform="rotate(-20 95 268)" />
+              <ellipse cx="210" cy="290" rx="6" ry="2.5" fill="#388e3c" transform="rotate(15 210 290)" />
+              <ellipse cx="140" cy="303" rx="7" ry="3" fill="#2e7d32" transform="rotate(-10 140 303)" />
+
+              <!-- Cashew halves -->
+              <path d="M170 275 Q175 270 180 275 Q175 278 170 275Z" fill="#f5deb3" />
+              <path d="M240 295 Q245 290 250 295 Q245 298 240 295Z" fill="#f0d8a0" />
+
+              <!-- Chilli slices -->
+              <ellipse cx="110" cy="290" rx="4" ry="2" fill="#4caf50" opacity="0.8" />
+              <ellipse cx="190" cy="300" rx="3.5" ry="1.8" fill="#66bb6a" opacity="0.8" />
+
+              <!-- Carrot bits -->
+              <circle cx="130" cy="285" r="2" fill="#ff8a65" />
+              <circle cx="220" cy="278" r="1.8" fill="#ff7043" />
+
+              <!-- Peas -->
+              <circle cx="160" cy="268" r="2.2" fill="#66bb6a" />
+              <circle cx="85" cy="295" r="2" fill="#4caf50" />
+
+              <!-- Coconut -->
+              <circle cx="145" cy="278" r="1" fill="#fff" opacity="0.8" />
+              <circle cx="175" cy="290" r="1.2" fill="#fff" opacity="0.7" />
+              <circle cx="205" cy="280" r="0.9" fill="#fff" opacity="0.8" />
+              <circle cx="115" cy="272" r="1.1" fill="#fff" opacity="0.7" />
+
+              <!-- ===== TIER 2 (Middle) ===== -->
+              <rect x="90" y="185" width="140" height="68" rx="7" fill="url(#upma-grain)" />
+              <ellipse cx="160" cy="188" rx="72" ry="7" fill="url(#upma-grain)" />
+              <rect x="100" y="195" width="70" height="40" rx="4" fill="url(#ghee-shine)" />
+              <!-- Sunflower golden ribbon -->
+              <rect x="88" y="242" width="144" height="10" rx="4" fill="#f59e0b" opacity="0.85" />
+              <rect x="88" y="242" width="144" height="5" rx="3" fill="#fef08a" opacity="0.6" />
+
+              <!-- Tier 2 garnishes -->
+              <circle cx="115" cy="210" r="1.4" fill="#1a1a1a" />
+              <circle cx="180" cy="215" r="1.3" fill="#2a2a1a" />
+              <circle cx="145" cy="230" r="1.5" fill="#1a1a1a" />
+              <ellipse cx="200" cy="220" rx="6" ry="2.5" fill="#2e7d32" transform="rotate(10 200 220)" />
+              <ellipse cx="120" cy="225" rx="5.5" ry="2.5" fill="#388e3c" transform="rotate(-15 120 225)" />
+              <path d="M155 210 Q160 205 165 210 Q160 213 155 210Z" fill="#f5deb3" />
+              <circle cx="135" cy="218" r="1.8" fill="#ff8a65" />
+              <circle cx="175" cy="205" r="2" fill="#66bb6a" />
+              <circle cx="130" cy="235" r="1" fill="#fff" opacity="0.7" />
+              <circle cx="170" cy="225" r="1.1" fill="#fff" opacity="0.8" />
+
+              <!-- ===== TIER 3 (Top) ===== -->
+              <rect x="120" y="125" width="80" height="63" rx="6" fill="url(#upma-grain)" />
+              <ellipse cx="160" cy="128" rx="42" ry="6" fill="url(#upma-grain)" />
+              <rect x="130" y="135" width="40" height="30" rx="4" fill="url(#ghee-shine)" />
+              <!-- Sunflower golden ribbon -->
+              <rect x="118" y="178" width="84" height="9" rx="4" fill="#f59e0b" opacity="0.85" />
+              <rect x="118" y="178" width="84" height="5" rx="3" fill="#fef08a" opacity="0.6" />
+
+              <!-- Tier 3 garnishes -->
+              <circle cx="140" cy="150" r="1.3" fill="#1a1a1a" />
+              <circle cx="175" cy="155" r="1.2" fill="#2a2a1a" />
+              <ellipse cx="155" cy="165" rx="5" ry="2" fill="#2e7d32" transform="rotate(-8 155 165)" />
+              <circle cx="165" cy="145" r="1.7" fill="#ff8a65" />
+              <circle cx="148" cy="160" r="1.6" fill="#66bb6a" />
+              <circle cx="160" cy="150" r="0.9" fill="#fff" opacity="0.8" />
+
+              <!-- ===== NUMBER CANDLES ===== -->
+              <!-- Candle "2" -->
+              <g class="candle candle--2" id="candle-2">
+                <rect x="137" y="85" width="14" height="42" rx="3" fill="#fbbf24" stroke="#f59e0b" stroke-width="1" />
+                <rect x="139" y="85" width="4" height="42" rx="2" fill="#fef08a" opacity="0.8" />
+                <text x="144" y="115" text-anchor="middle" font-family="'Nunito', sans-serif" font-weight="800"
+                  font-size="22" fill="#92400e">2</text>
+                <!-- Flame -->
+                <g class="flame" id="flame-2" filter="url(#flame-glow)">
+                  <ellipse cx="144" cy="76" rx="7" ry="12" fill="url(#flame-grad)">
+                    <animate attributeName="ry" values="12;10;13;11;12" dur="0.6s" repeatCount="indefinite" />
+                    <animate attributeName="rx" values="7;6;8;6.5;7" dur="0.8s" repeatCount="indefinite" />
+                  </ellipse>
+                  <ellipse cx="144" cy="78" rx="3" ry="6" fill="#fff4c4" opacity="0.8">
+                    <animate attributeName="ry" values="6;5;7;5.5;6" dur="0.5s" repeatCount="indefinite" />
+                  </ellipse>
+                </g>
+                <!-- Smoke (hidden initially) -->
+                <g class="smoke" id="smoke-2" style="opacity:0" filter="url(#smoke-blur)">
+                  <circle cx="144" cy="70" r="4" fill="#bbb" opacity="0.5" />
+                  <circle cx="140" cy="60" r="5" fill="#ccc" opacity="0.3" />
+                  <circle cx="148" cy="50" r="6" fill="#ddd" opacity="0.2" />
+                </g>
+              </g>
+
+              <!-- Candle "1" -->
+              <g class="candle candle--1" id="candle-1">
+                <rect x="167" y="85" width="14" height="42" rx="3" fill="#fbbf24" stroke="#f59e0b" stroke-width="1" />
+                <rect x="169" y="85" width="4" height="42" rx="2" fill="#fef08a" opacity="0.8" />
+                <text x="174" y="115" text-anchor="middle" font-family="'Nunito', sans-serif" font-weight="800"
+                  font-size="22" fill="#92400e">1</text>
+                <!-- Flame -->
+                <g class="flame" id="flame-1" filter="url(#flame-glow)">
+                  <ellipse cx="174" cy="76" rx="7" ry="12" fill="url(#flame-grad)">
+                    <animate attributeName="ry" values="11;13;10;12;11" dur="0.7s" repeatCount="indefinite" />
+                    <animate attributeName="rx" values="6.5;7.5;6;7;6.5" dur="0.9s" repeatCount="indefinite" />
+                  </ellipse>
+                  <ellipse cx="174" cy="78" rx="3" ry="6" fill="#fff4c4" opacity="0.8">
+                    <animate attributeName="ry" values="5.5;6.5;5;6;5.5" dur="0.6s" repeatCount="indefinite" />
+                  </ellipse>
+                </g>
+                <!-- Smoke -->
+                <g class="smoke" id="smoke-1" style="opacity:0" filter="url(#smoke-blur)">
+                  <circle cx="174" cy="70" r="4" fill="#bbb" opacity="0.5" />
+                  <circle cx="170" cy="60" r="5" fill="#ccc" opacity="0.3" />
+                  <circle cx="178" cy="50" r="6" fill="#ddd" opacity="0.2" />
+                </g>
+              </g>
+
+              <!-- Sunflower topper -->
+              <g transform="translate(160, 68)">
+                <line x1="0" y1="0" x2="0" y2="12" stroke="#4d7c0f" stroke-width="2" />
+                <path
+                  d="M0,-11 L2,-5 L5,-9 L4,-3 L9,-5 L6,-1 L11,0 L6,1 L9,5 L4,3 L5,9 L2,5 L0,11 L-2,5 L-5,9 L-4,3 L-9,5 L-6,1 L-11,0 L-6,-1 L-9,-5 L-4,-3 L-5,-9 L-2,-5 Z"
+                  fill="#fbbf24" stroke="#f59e0b" stroke-width="0.6" />
+                <circle cx="0" cy="0" r="5" fill="#78350f" />
+                <circle cx="0" cy="0" r="3" fill="#451a03" />
+                <circle cx="-1" cy="-1" r="0.9" fill="#fef08a" opacity="0.9" />
+              </g>
+            </svg>
+
+            <!-- Blow interaction -->
+            <div class="cake__blow" id="cake-blow">
+              <p class="cake__blow-text">Make a wish and blow! 🌬️</p>
+              <button class="cake__blow-btn btn btn--pink" id="blow-btn" aria-label="Blow out candles">
+                <span>🌬️</span> Tap to blow
+              </button>
+              <p class="cake__mic-hint" id="mic-hint">or blow into your mic!</p>
+            </div>
+
+            <!-- Post-blow -->
+            <div class="cake__done" id="cake-done" style="display:none">
+              <p class="cake__wish">✨ Wish sent ✨</p>
+              <p class="cake__caption">(yes, it's upma flavoured cause I know you'll love it)</p>
+            </div>
+          </div>
+          <p class="tap-hint" id="cake-continue" style="display:none">tap to continue</p>
+        </div>
+      </section>
+
+      <!-- ====== SCREEN 4: BALLOONS ====== -->
+      <section class="screen screen--balloons" id="screen-3" aria-label="Pop the balloons">
+        <div class="screen__inner">
+          <h2 class="balloons__title">Pop the balloons 🎈</h2>
+          <p class="balloons__sub">5 reasons are waiting inside. One pop at a time.</p>
+
+          <div class="balloons__arena" id="balloon-arena">
+            <!-- Balloons generated by JS -->
+          </div>
+
+          <div class="balloons__reasons" id="reason-list">
+            <!-- Reason cards appear here -->
+          </div>
+
+          <div class="balloons__done" id="balloons-done" style="display:none">
+            <p class="balloons__still"><em>Still nowhere near all the reasons…</em></p>
+            <button class="btn btn--pink" id="balloons-continue">Keep going →</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====== SCREEN 5: LETTER INTRO ====== -->
+      <section class="screen screen--letter-intro" id="screen-4" aria-label="Letter introduction">
+        <div class="screen__inner">
+          <h2 class="letter-intro__title">Before this ends, Minnu…</h2>
+          <p class="letter-intro__sub">A letter from <strong>Akhil</strong>, your dance partner, is waiting inside.</p>
+
+          <div class="letter-intro__avatar">
+            <div class="letter-intro__circle">A</div>
+            <span class="letter-intro__hand">👉</span>
+          </div>
+
+          <button class="btn btn--pink letter-intro__btn" id="open-letter-btn">
+            <span>💌</span> Open when you're ready
+          </button>
+        </div>
+      </section>
+
+      <!-- ====== SCREEN 6: LETTER ====== -->
+      <section class="screen screen--letter" id="screen-5" aria-label="Personal letter">
+        <div class="screen__inner">
+          <div class="letter__card" id="letter-card">
+            <div class="letter__text" id="letter-text">
+              <!-- Typewriter text goes here -->
+            </div>
+            <div class="letter__signoff" id="letter-signoff" style="opacity:0">
+              <p>Yours,</p>
+              <p class="letter__signature">Akhil</p>
+              <p class="letter__role">(your dance partner)</p>
+            </div>
+          </div>
+
+          <!-- Optional photo gallery -->
+          <div class="letter__photos" id="letter-photos" style="display:none">
+            <!-- Polaroid photos generated by JS -->
+          </div>
+
+          <button class="btn btn--pink" id="letter-continue" style="display:none">Keep going →</button>
+        </div>
+      </section>
+
+      <!-- ====== SCREEN 7: POEM ====== -->
+      <section class="screen screen--poem" id="screen-6" aria-label="A poem for you">
+        <div class="screen__inner">
+          <h2 class="poem__title">A little something I wrote… ✨</h2>
+          <div class="poem__card">
+            <div class="poem__lines">
+              <p>Today the world is brighter</p>
+              <p>for the day that you were born,</p>
+              <p>A little more beautiful</p>
+              <p>since the moment you adorned.</p>
+              <p class="poem__break"></p>
+              <p>May your smile stay golden,</p>
+              <p>your heart stay light,</p>
+              <p>And may your dreams find</p>
+              <p>their way into sight.</p>
+              <p class="poem__break"></p>
+              <p>May life give you reasons</p>
+              <p>to laugh every day,</p>
+              <p>And gently guide you</p>
+              <p>whenever you lose your way.</p>
+              <p class="poem__break"></p>
+              <p>So keep shining, Minnu,</p>
+              <p>just the way you do,</p>
+              <p>And may this year be</p>
+              <p>as wonderful as you.</p>
+            </div>
+            <p class="poem__sign">— Akhil 🌻</p>
+          </div>
+          <button class="btn btn--pink" id="poem-continue">Keep going →</button>
+        </div>
+      </section>
+
+      <!-- ====== SCREEN 8: FINALE ====== -->
+      <section class="screen screen--finale" id="screen-7" aria-label="Finale">
+        <div class="screen__inner">
+          <h1 class="finale__title" id="finale-title">
+            <span class="finale__happy">HAPPY BIRTHDAY</span>
+            <span class="finale__name">Minnu!</span>
+          </h1>
+
+          <!-- Teddy bear with party hat and gift -->
+          <div class="finale__bear" aria-hidden="true">
+            <svg viewBox="0 0 220 280" class="teddy-bear" role="img"
+              aria-label="Cute teddy bear with party hat holding a gift">
+              <!-- Ears -->
+              <circle cx="72" cy="75" r="28" fill="#e8c9a0" />
+              <circle cx="148" cy="75" r="28" fill="#e8c9a0" />
+              <circle cx="72" cy="75" r="16" fill="#fde68a" />
+              <circle cx="148" cy="75" r="16" fill="#fde68a" />
+
+              <!-- Head -->
+              <circle cx="110" cy="105" r="52" fill="#e8c9a0" />
+
+              <!-- Eyes -->
+              <circle cx="92" cy="98" r="5" fill="#333" />
+              <circle cx="128" cy="98" r="5" fill="#333" />
+              <circle cx="90" cy="96" r="2" fill="#fff" />
+              <circle cx="126" cy="96" r="2" fill="#fff" />
+
+              <!-- Nose -->
+              <ellipse cx="110" cy="112" rx="7" ry="5" fill="#d4a07a" />
+              <circle cx="110" cy="110" r="3" fill="#8d6e5e" />
+
+              <!-- Mouth -->
+              <path d="M104 118 Q110 126 116 118" stroke="#8d6e5e" stroke-width="2" fill="none"
+                stroke-linecap="round" />
+
+              <!-- Blush -->
+              <ellipse cx="80" cy="115" rx="8" ry="5" fill="#fde68a" opacity="0.6" />
+              <ellipse cx="140" cy="115" rx="8" ry="5" fill="#fde68a" opacity="0.6" />
+
+              <!-- Body -->
+              <ellipse cx="110" cy="200" rx="55" ry="60" fill="#e8c9a0" />
+              <ellipse cx="110" cy="195" rx="40" ry="35" fill="#f0d8b8" opacity="0.5" />
+
+              <!-- Left arm -->
+              <ellipse cx="55" cy="190" rx="22" ry="16" fill="#e8c9a0" transform="rotate(-20 55 190)" />
+
+              <!-- Right arm (holding gift) -->
+              <ellipse cx="165" cy="190" rx="22" ry="16" fill="#e8c9a0" transform="rotate(20 165 190)" />
+
+              <!-- Gift box in golden sunflower colors -->
+              <g transform="translate(140, 200)">
+                <rect x="0" y="0" width="40" height="35" rx="3" fill="#f59e0b" />
+                <rect x="0" y="0" width="40" height="35" rx="3" fill="url(#gift-pattern)" opacity="0.2" />
+                <rect x="17" y="0" width="6" height="35" fill="#fef08a" />
+                <rect x="0" y="14" width="40" height="6" fill="#fef08a" />
+                <!-- Bow -->
+                <ellipse cx="20" cy="0" rx="10" ry="7" fill="#fef08a" />
+                <ellipse cx="12" cy="-2" rx="8" ry="5" fill="#fbbf24" transform="rotate(-15 12 -2)" />
+                <ellipse cx="28" cy="-2" rx="8" ry="5" fill="#fbbf24" transform="rotate(15 28 -2)" />
+                <circle cx="20" cy="0" r="3" fill="#d97706" />
+              </g>
+
+              <!-- Feet -->
+              <ellipse cx="85" cy="252" rx="18" ry="12" fill="#e8c9a0" />
+              <ellipse cx="135" cy="252" rx="18" ry="12" fill="#e8c9a0" />
+              <ellipse cx="85" cy="254" rx="10" ry="6" fill="#d4a07a" opacity="0.4" />
+              <ellipse cx="135" cy="254" rx="10" ry="6" fill="#d4a07a" opacity="0.4" />
+
+              <!-- Party hat in golden sunflower theme -->
+              <g transform="translate(110, 30)">
+                <polygon points="0,-35 -22,25 22,25" fill="#f59e0b" />
+                <polygon points="0,-35 -22,25 22,25" fill="none" stroke="#fbbf24" stroke-width="0" />
+                <!-- Stripes on hat -->
+                <line x1="-7" y1="0" x2="7" y2="0" stroke="#fef08a" stroke-width="3" opacity="0.8" />
+                <line x1="-14" y1="10" x2="14" y2="10" stroke="#fef08a" stroke-width="3" opacity="0.8" />
+                <line x1="-18" y1="20" x2="18" y2="20" stroke="#fef08a" stroke-width="3" opacity="0.8" />
+                <!-- Pom pom -->
+                <circle cx="0" cy="-35" r="6" fill="#fbbf24" />
+                <circle cx="0" cy="-35" r="4" fill="#fef08a" />
+              </g>
+            </svg>
+          </div>
+
+          <!-- Dancing couple silhouettes in warm tones -->
+          <div class="finale__dancers" aria-hidden="true">
+            <svg viewBox="0 0 120 140" class="dancers-svg">
+              <!-- Girl in golden sunflower dress -->
+              <g transform="translate(35, 10)">
+                <!-- Head -->
+                <circle cx="20" cy="15" r="10" fill="#fde68a" />
+                <!-- Hair -->
+                <path d="M10 12 Q10 0 20 2 Q30 0 30 12" fill="#5d4037" />
+                <path d="M10 12 Q8 20 10 25" fill="#5d4037" />
+                <!-- Body/dress -->
+                <path d="M13 25 L27 25 L35 90 Q20 95 5 90 Z" fill="#f59e0b" />
+                <path d="M15 25 L25 25 L30 60 Q20 62 10 60 Z" fill="#fbbf24" opacity="0.7" />
+                <!-- Arms -->
+                <line x1="13" y1="30" x2="-5" y2="50" stroke="#f59e0b" stroke-width="4" stroke-linecap="round" />
+                <line x1="27" y1="30" x2="50" y2="40" stroke="#f59e0b" stroke-width="4" stroke-linecap="round" />
+                <!-- Legs -->
+                <line x1="15" y1="90" x2="10" y2="125" stroke="#d97706" stroke-width="4" stroke-linecap="round" />
+                <line x1="25" y1="90" x2="30" y2="125" stroke="#d97706" stroke-width="4" stroke-linecap="round" />
+                <!-- Shoes -->
+                <ellipse cx="10" cy="127" rx="6" ry="3" fill="#b45309" />
+                <ellipse cx="30" cy="127" rx="6" ry="3" fill="#b45309" />
+              </g>
+
+              <!-- Boy in warm amber/brown -->
+              <g transform="translate(65, 10)">
+                <!-- Head -->
+                <circle cx="20" cy="15" r="10" fill="#fde68a" />
+                <!-- Hair -->
+                <path d="M10 10 Q10 2 20 4 Q30 2 30 10 L30 14 Q25 8 15 8 L10 14 Z" fill="#3e2723" />
+                <!-- Body -->
+                <rect x="12" y="25" width="16" height="40" rx="3" fill="#b45309" />
+                <rect x="14" y="25" width="6" height="40" rx="2" fill="#d97706" opacity="0.6" />
+                <!-- Arms -->
+                <line x1="12" y1="30" x2="-5" y2="45" stroke="#b45309" stroke-width="4" stroke-linecap="round" />
+                <line x1="28" y1="30" x2="45" y2="35" stroke="#b45309" stroke-width="4" stroke-linecap="round" />
+                <!-- Pants -->
+                <rect x="12" y="62" width="16" height="5" rx="2" fill="#291a10" />
+                <!-- Legs -->
+                <line x1="16" y1="67" x2="12" y2="120" stroke="#291a10" stroke-width="5" stroke-linecap="round" />
+                <line x1="24" y1="67" x2="28" y2="120" stroke="#291a10" stroke-width="5" stroke-linecap="round" />
+                <!-- Shoes -->
+                <ellipse cx="12" cy="122" rx="6" ry="3" fill="#4e342e" />
+                <ellipse cx="28" cy="122" rx="6" ry="3" fill="#4e342e" />
+              </g>
+            </svg>
+          </div>
+
+          <p class="finale__footer">Made with warmth, just for you 🌻<br><strong>— Akhil</strong></p>
+          <button class="btn btn--outline" id="replay-btn">✨ Replay</button>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+
+</html>
